@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response, request, jsonify, render_template
 from flask_pymongo import pymongo
 from database import DatabaseConnection
 
@@ -20,7 +20,7 @@ def addNewProperty():
 @app.route("/properties", methods=["GET"])
 def getProperties():
     properties = db.findMany("properties", {})
-    return jsonify(properties)
+    return render_template('properties.html', properties=properties)
 
 @app.route("/", methods=["GET"])
 def hello():
