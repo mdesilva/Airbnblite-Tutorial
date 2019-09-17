@@ -7,6 +7,10 @@ import datetime
 app = Flask(__name__)
 db = DatabaseConnection()
 
+@app.route("/addNewProperty", methods=["GET"])
+def getPropertyForm():
+    return render_template("addNewProperty.html")
+    
 @app.route("/addNewProperty", methods=["POST"])
 def addNewProperty():
     document = {
@@ -21,7 +25,7 @@ def addNewProperty():
 def getProperties():
     properties = db.findMany("properties", {})
     return render_template('properties.html', properties=properties)
-
+    
 @app.route("/", methods=["GET"])
 def hello():
     return Response("<h1> Hey there </h1>", status=200, content_type="text/html")
