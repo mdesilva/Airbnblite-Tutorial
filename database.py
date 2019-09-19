@@ -15,6 +15,9 @@ class DatabaseConnection():
             result.append(row)
         return result
 
+    """
+    query should be structured as an object:
+    """
     def findOne(self, collectionName, query):
         collection = self.db[collectionName]
         result = collection.find_one(query, {'_id':0})
