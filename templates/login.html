@@ -1,7 +1,5 @@
-<html>
-<header>
-    <title> Login </title>
-</header>    
+{% extends "base.html" %}
+{% block body %}
 <body>
         <form action="http://localhost:4000/login" method="post">
             <input type="text" name="username" id="" placeholder="Username: ">
@@ -10,3 +8,4 @@
         </form>
     </body>
 </html>
+{% endblock %}

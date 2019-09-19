@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, jsonify, render_template, make_response
+from flask import Flask, Response, request, jsonify, render_template, make_response, flash
 from flask_pymongo import pymongo
 from database import DatabaseConnection
 from Services.UserService import UserService
@@ -7,6 +7,7 @@ import datetime
 import uuid
 
 app = Flask(__name__)
+app.secret_key = "airbnblite"
 db = DatabaseConnection()
 userService = UserService()
 
@@ -70,7 +71,9 @@ def login():
         response.set_cookie("sid", sid)
         return response
     else:
-        return Response("Login was invalid", status=400, content_type="text/html")
+        flash("Incorrect login credentials")
+        return render_template("login.html")
+        #return Response("Login was invalid", status=400, content_type="text/html")
 
 @app.route("/account", methods=["GET"])
 def getMyAccount():
@@ -78,7 +81,8 @@ def getMyAccount():
     if user:
         firstName = userService.getFirstName(user)
     else:
-        return Response("Invalid session", status=400, content_type="text/html")
+        flash("Invalid session")
+        return render_template("login.html")
 
     return render_template("account.html", firstName=firstName)
 
